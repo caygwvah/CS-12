@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CS 12 | 프리미엄 남성 포뮬러</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        :root {
+            /* 이름은 유지하되(기존 탭 스타일 호환) 값만 프리미엄 블루로 교체 */
+            --main-red: #2f6bff;
+            --main-red-dark: #1b4fd8;
+            --hot: #ff3b53;
+            --navy: #0f2440;
+            --bg-white: #ffffff;
+            --border: #e8ebf2;
+            --text: #14192a;
+            --muted: #8791a7;
+            --ink: #0b1120;
+            --soft: #f5f7fb;
+            --radius: 18px;
+            --shadow-sm: 0 2px 10px rgba(17, 25, 42, 0.06);
+            --shadow-md: 0 12px 30px rgba(17, 25, 42, 0.10);
+            --shadow-red: 0 12px 28px rgba(47, 107, 255, 0.28);
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif; }
+        body, html { margin: 0; padding: 0; height: 100vh; width: 100vw; overflow: hidden; background: #eef1f7; color: var(--text); }
+
+        .app {
+            display: flex; flex-direction: column; height: 100%; max-width: 1240px; margin: 0 auto;
+            background: var(--bg-white); position: relative; overflow: hidden;
+            box-shadow: 0 30px 80px rgba(11, 17, 32, 0.18);
+        }
+
+        /* ===== 상단 공지 바 ===== */
+        .topbar {
+            height: 34px; display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(90deg, var(--navy), #163a6b); color: #fff; font-size: 12px; font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .topbar b { color: #7fd0ff; }
+
+        header {
+            height: 64px; display: flex; align-items: center; padding: 0 26px; justify-content: space-between;
+            border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
+            position: relative; z-index: 5;
+        }
+        .logo { font-weight: 900; font-size: 24px; letter-spacing: 1px; display: flex; align-items: center; gap: 2px; color: var(--navy); }
+        .logo span {
+            color: #fff; background: linear-gradient(135deg, var(--main-red), var(--main-red-dark));
+            padding: 2px 9px; border-radius: 9px; margin-left: 4px; box-shadow: var(--shadow-red);
+        }
+        .header-nav { display: flex; gap: 22px; font-size: 14px; font-weight: 700; color: var(--muted); }
+        .header-nav span { cursor: pointer; transition: color 0.2s; }
+        .header-nav span:hover { color: var(--navy); }
+        .brand-tag {
+            font-size: 11px; color: var(--muted); font-weight: 800; letter-spacing: 1.5px;
+            padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--soft);
+        }
+
+        main { flex: 1; display: flex; overflow: hidden; }
+
+        /* ===== LEFT / PRODUCT SHOWCASE ===== */
+        .left-zone {
+            width: 44%; position: relative; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 30px;
+            background:
+                radial-gradient(120% 90% at 50% 0%, rgba(47, 107, 255, 0.28), transparent 55%),
+                radial-gradient(90% 70% at 80% 100%, rgba(23, 184, 201, 0.20), transparent 60%),
+                linear-gradient(160deg, #0f2440 0%, #071224 100%);
+            overflow: hidden;
+        }
+        .left-zone::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+            background-size: 22px 22px; opacity: 0.5; pointer-events: none;
+        }
+        .glow-ring {
+            position: absolute; width: 360px; height: 360px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(47,107,255,0.38), transparent 65%);
+            filter: blur(24px); animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.08); opacity: 1; } }
+        .badge-top {
+            position: relative; z-index: 2; align-self: flex-start; margin-bottom: auto;
+            display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+            color: #fff; font-size: 12px; font-weight: 700; backdrop-filter: blur(6px);
+        }
+        .badge-top b { color: #7fd0ff; }
+
+        .disc-circle {
+            position: absolute; top: 26px; right: 26px; z-index: 3; width: 92px; height: 92px; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(135deg, var(--main-red), var(--main-red-dark)); color: #fff;
+            box-shadow: 0 14px 30px rgba(47,107,255,0.45); animation: float 5s ease-in-out infinite;
+        }
+        .disc-circle b { font-size: 26px; font-weight: 900; line-height: 1; }
+        .disc-circle small { font-size: 11px; font-weight: 700; opacity: 0.9; margin-top: 2px; }
+
+        .left-zone .hero-img {
+            position: relative; z-index: 2; max-width: 74%;
+            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.55));
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        .left-text { position: relative; z-index: 2; margin-top: 24px; margin-bottom: auto; text-align: center; color: #fff; }
+        .left-text b { display: block; font-size: 19px; margin-bottom: 8px; letter-spacing: -0.3px; }
+        .left-badges { position: relative; z-index: 2; display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+        .mini-chip {
+            font-size: 11px; font-weight: 700; color: #fff; padding: 7px 12px; border-radius: 999px;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+        }
+
+        /* ===== RIGHT / CONTENT ===== */
+        .right-zone { width: 56%; display: flex; flex-direction: column; background: #fff; position: relative; }
+        .nav-tabs { display: flex; padding: 10px 14px 0; gap: 6px; border-bottom: 1px solid var(--border); background: #fff; }
+        .nav-item {
+            flex: 1; padding: 15px 10px; text-align: center; cursor: pointer; color: var(--muted); font-weight: 700;
+            position: relative; border-radius: 12px 12px 0 0; transition: color 0.2s, background 0.2s; font-size: 15px;
+        }
+        .nav-item:hover { color: var(--text); background: var(--soft); }
+        .nav-item.active { color: var(--main-red); }
+        .nav-item.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 12%; width: 76%; height: 3px;
+            background: linear-gradient(90deg, var(--main-red), var(--main-red-dark)); border-radius: 3px 3px 0 0;
+        }
+
+        .view-port { flex: 1; padding: 24px 30px; overflow-y: auto; padding-bottom: 80px; scroll-behavior: smooth; }
+        .view-port::-webkit-scrollbar { width: 8px; }
+        .view-port::-webkit-scrollbar-thumb { background: #d7dce8; border-radius: 8px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.35s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ===== 상품 헤드 (평점/제목/가격) ===== */
+        .rating-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
+        .rating-row .stars { color: #ffb800; letter-spacing: 1px; }
+        .rating-row .score { color: var(--text); font-weight: 800; }
+        .rating-row a { color: var(--muted); text-decoration: underline; }
+        .prod-sub { margin: 12px 0 4px; font-size: 14px; color: var(--muted); font-weight: 600; }
+        .prod-title { margin: 0; font-size: 23px; font-weight: 900; letter-spacing: -0.4px; color: var(--navy); line-height: 1.35; }
+        .price-line { display: flex; align-items: baseline; gap: 10px; margin: 14px 0 4px; flex-wrap: wrap; }
+        .price-line #disp_off { font-size: 26px; font-weight: 900; color: var(--main-red); }
+        .price-line #disp_price { font-size: 26px; font-weight: 900; color: var(--navy); }
+        .price-line #disp_original { font-size: 15px; color: #b3bac9; text-decoration: line-through; font-weight: 600; }
+
+        .info-rows { margin: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 6px 0; }
+        .info-rows .row { display: flex; padding: 9px 0; font-size: 14px; }
+        .info-rows .row .k { width: 92px; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+        .info-rows .row .v { color: var(--text); }
+
+        .benefit-banner {
+            display: flex; align-items: center; gap: 10px; padding: 15px 18px; border-radius: 14px;
+            background: linear-gradient(135deg, #eaf1ff, #f0f6ff); border: 1px solid #d7e3ff; margin-bottom: 22px;
+        }
+        .benefit-banner .tag {
+            font-size: 11px; font-weight: 900; color: #fff; background: var(--navy); padding: 5px 10px; border-radius: 999px; flex-shrink: 0;
+        }
+        .benefit-banner .txt { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .benefit-banner .txt b { color: var(--main-red); }
+
+        /* 주문 혜택 영역 */
+        .order-card {
+            background: linear-gradient(160deg, #f2f6ff, #eaf1ff); border-radius: var(--radius); padding: 20px 22px;
+            margin-bottom: 24px; border: 1px solid #dbe6ff; box-shadow: var(--shadow-sm);
+        }
+        .order-card h4 { margin: 0 0 14px 0; color: var(--main-red-dark); font-size: 16px; display: flex; align-items: center; font-weight: 800; }
+        .order-card h4::before { content: '🔥'; margin-right: 6px; }
+        .order-card ul { margin: 0; padding: 0; list-style: none; font-size: 14px; color: #46506a; }
+        .order-card li { padding: 7px 0 7px 24px; position: relative; line-height: 1.5; }
+        .order-card li::before {
+            content: ''; position: absolute; left: 0; top: 11px; width: 8px; height: 8px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--main-red), var(--main-red-dark)); box-shadow: 0 0 0 4px rgba(47,107,255,0.14);
+        }
+
+        .section-label { font-size: 13px; font-weight: 800; color: var(--navy); letter-spacing: 0.2px; margin: 0 0 12px 2px; }
+        .section-label b { color: var(--main-red); }
+
+        /* 옵션 선택 (6단계) */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .p-btn {
+            border: 2px solid var(--border); padding: 14px 14px; border-radius: 14px; text-align: left;
+            cursor: pointer; transition: 0.18s; background: #fff; position: relative; font-weight: 700; color: var(--text);
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .p-btn .opt-name { font-size: 14px; color: var(--navy); }
+        .p-btn .opt-name small { display: block; font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+        .p-btn .opt-price { font-size: 15px; font-weight: 900; color: var(--main-red); white-space: nowrap; }
+        .p-btn:hover { border-color: #b9cdff; transform: translateY(-2px); }
+        .p-btn.active { border-color: var(--main-red); background: linear-gradient(160deg, #fff, #f2f6ff); box-shadow: var(--shadow-red); }
+        .p-btn.active::after {
+            content: 'BEST'; position: absolute; top: -10px; right: 12px; font-size: 10px; font-weight: 800; color: #fff;
+            background: linear-gradient(135deg, var(--main-red), var(--main-red-dark)); padding: 3px 8px; border-radius: 999px;
+        }
+        .p-btn[data-badge="MAX"].active::after { content: 'MAX'; background: linear-gradient(135deg, var(--hot), #e11d33); }
+        /* BEST 옵션(3통)은 선택 여부와 상관없이 항상 배지 노출 */
+        .p-btn[data-badge="BEST"]::after {
+            content: 'BEST'; position: absolute; top: -10px; right: 12px; font-size: 10px; font-weight: 800; color: #fff;
+            background: linear-gradient(135deg, var(--main-red), var(--main-red-dark)); padding: 3px 8px; border-radius: 999px;
+        }
+
+        /* TOTAL 영역 */
+        .total-row {
+            display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; margin-bottom: 20px;
+            background: var(--navy); color: #fff; border-radius: 14px; box-shadow: var(--shadow-md);
+        }
+        .total-row .lbl { font-size: 14px; font-weight: 700; opacity: 0.85; letter-spacing: 1px; }
+        .total-row #total_price { font-size: 24px; font-weight: 900; color: #7fd0ff; }
+
+        .input-box input {
+            width: 100%; padding: 15px 16px; margin-bottom: 11px; border: 1.5px solid var(--border); border-radius: 13px;
+            font-size: 15px; outline: none; transition: border 0.2s, box-shadow 0.2s; background: var(--soft);
+        }
+        .input-box input:focus { border-color: var(--main-red); background: #fff; box-shadow: 0 0 0 4px rgba(47,107,255,0.10); }
+
+        .btn-call {
+            width: 100%; background: linear-gradient(135deg, #16223c, #0b1120); color: #fff; padding: 18px; border-radius: 14px;
+            font-weight: 800; text-align: center; text-decoration: none; display: block; margin-bottom: 12px; border: none;
+            cursor: pointer; font-size: 15px; letter-spacing: 0.2px; transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: var(--shadow-md);
+        }
+        .btn-call:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(11,17,32,0.22); }
+        .btn-call:active { transform: translateY(0); }
+
+        .pay-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .pay-btn {
+            padding: 16px; border-radius: 14px; border: none; font-weight: 800; cursor: pointer; font-size: 14px;
+            transition: transform 0.15s, box-shadow 0.2s; box-shadow: var(--shadow-sm);
+        }
+        .pay-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .kakao { background: #fee500; color: #3c1e1e; }
+        .toss { background: #3182f6; color: #fff; }
+
+        .bank-info {
+            background: var(--soft); border-radius: 14px; padding: 16px; text-align: center; font-size: 12px; color: #666;
+            border: 1px dashed #cfd6e4; line-height: 1.7;
+        }
+        .bank-info b { color: var(--text); font-size: 13px; }
+
+        /* 효능 영역 */
+        .effect-h3 {
+            padding-left: 14px; font-size: 17px; font-weight: 800; margin: 26px 0 15px; position: relative; letter-spacing: -0.3px; color: var(--navy);
+        }
+        .effect-h3::before {
+            content: ''; position: absolute; left: 0; top: 2px; bottom: 2px; width: 5px; border-radius: 5px;
+            background: linear-gradient(180deg, var(--main-red), var(--main-red-dark));
+        }
+        .effect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .effect-box {
+            background: #fff; padding: 18px; border-radius: 16px; border: 1px solid var(--border); font-size: 14px;
+            line-height: 1.55; box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .effect-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .effect-box b { color: var(--main-red-dark); display: block; margin-bottom: 6px; font-size: 15px; }
+
+        .formula-card {
+            background: linear-gradient(160deg, #f5f7fb, #eef2fb); border: 1px solid var(--border); border-radius: 16px;
+            padding: 18px 20px; font-size: 14px; line-height: 1.8; color: #55607a; margin: 4px 0;
+        }
+        .safety-list { font-size: 14px; line-height: 1; color: #55607a; padding: 0; margin: 8px 0; list-style: none; }
+        .safety-list li { padding: 11px 0 11px 28px; position: relative; border-bottom: 1px solid var(--border); }
+        .safety-list li:last-child { border-bottom: none; }
+        .safety-list li::before {
+            content: '✓'; position: absolute; left: 0; top: 10px; width: 18px; height: 18px; font-size: 11px; font-weight: 900;
+            color: #fff; background: linear-gradient(135deg, var(--main-red), var(--main-red-dark));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* 리뷰 영역 */
+        .rev-summary {
+            display: flex; align-items: center; justify-content: center; padding: 22px; margin-bottom: 20px;
+            background: linear-gradient(160deg, #f5f7fb, #eef2fb); border: 1px solid var(--border); border-radius: 18px;
+        }
+        .rev-summary-score { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .rev-summary-score b { font-size: 38px; font-weight: 900; color: var(--navy); line-height: 1; }
+        .rev-summary-stars { color: #ffb800; font-size: 20px; letter-spacing: 2px; }
+        .rev-summary-score small { font-size: 13px; color: var(--muted); font-weight: 700; }
+
+        .rev-form-title { margin: 0 0 4px; font-size: 16px; font-weight: 800; color: var(--navy); }
+        .rev-form-guide { margin: 0 0 14px; font-size: 13px; color: var(--muted); font-weight: 600; }
+        .star-rating { display: flex; gap: 6px; margin-bottom: 12px; justify-content: center; font-size: 30px; }
+        .star { color: #e2e5ee; cursor: pointer; transition: 0.15s; }
+        .star:hover { transform: scale(1.15); }
+        .star.selected { color: #ffb800; text-shadow: 0 2px 8px rgba(255,184,0,0.4); }
+        .rev-form {
+            background: var(--soft); padding: 22px; border-radius: 18px; border: 1.5px solid var(--border); margin-bottom: 30px;
+            transition: 0.3s;
+        }
+        .rev-form.editing { border-color: var(--main-red); background: #f6f9ff; box-shadow: var(--shadow-red); }
+        .rev-form textarea {
+            width: 100%; height: 84px; border: 1.5px solid var(--border); border-radius: 13px; padding: 13px; resize: none;
+            margin-bottom: 12px; outline: none; font-size: 14px; background: #fff; transition: border 0.2s;
+        }
+        .rev-form textarea:focus { border-color: var(--main-red); }
+
+        .rev-actions { margin-top: 10px; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+        .action-btns span { cursor: pointer; margin-left: 12px; transition: 0.2s; font-weight: 700; }
+        .action-btns span:hover { color: var(--main-red); }
+
+        /* 토스트 알림창 */
+        #toast {
+            visibility: hidden; min-width: 250px; background: rgba(15,20,34,0.96); color: #fff; text-align: center;
+            border-radius: 14px; padding: 16px 20px; position: absolute; z-index: 999; left: 50%; bottom: 30px;
+            transform: translateX(-50%); font-size: 14px; opacity: 0; transition: opacity 0.3s, bottom 0.3s;
+            box-shadow: var(--shadow-md); backdrop-filter: blur(8px); white-space: pre-line;
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+
+        @media (max-width: 768px) {
+            main { flex-direction: column; overflow-y: auto; }
+            .left-zone, .right-zone { width: 100%; height: auto; }
+            .left-zone { padding: 30px 20px 34px; }
+            .left-zone .hero-img { max-width: 60%; }
+            .header-nav { display: none; }
+            .price-grid { grid-template-columns: 1fr; }
+            body, html { overflow: auto; }
+            .app { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <header>
+        <div class="logo">CS <span>12</span></div>
+        <nav class="header-nav">
+            <span onclick="goBest()">BEST</span><span onclick="tab(2)">리뷰</span><span>고객센터</span>
+        </nav>
+        <div class="brand-tag">PREMIUM MALE FORMULA</div>
+    </header>
+
+    <main>
+        <div class="left-zone">
+            <div class="glow-ring"></div>
+            <div class="badge-top">⭐ 고객 만족도 <b>98%</b></div>
+            <div class="disc-circle"><b>21%</b><small>MAX SALE</small></div>
+            <img src="product1.jpg" alt="CS 12" class="hero-img" onerror="this.style.display='none'">
+            <div class="left-text">
+                <b>강력한 남성의 상징, 그 이상의 결과</b>
+                <span style="color:#7fd0ff; font-size:14px; font-weight:bold;">1시간의 기적, 4일간의 압도적 지속력</span>
+            </div>
+            <div class="left-badges">
+                <span class="mini-chip">100% 유기농</span>
+                <span class="mini-chip">Made in USA</span>
+                <span class="mini-chip">부작용 ZERO</span>
+            </div>
+        </div>
+
+        <div class="right-zone">
+            <div class="nav-tabs">
+                <div class="nav-item active" onclick="tab(0)">즉시주문</div>
+                <div class="nav-item" onclick="tab(1)">압도적 효능</div>
+                <div class="nav-item" onclick="tab(2)">실제후기</div>
+            </div>
+
+            <div class="view-port">
+                <!-- 즉시 주문 탭 -->
+                <div id="tab0" class="tab-content active">
+                    <div class="rating-row">
+                        <span class="stars">★★★★★</span>
+                        <span class="score">4.9</span>
+                        <span>|</span>
+                        <a href="#" onclick="tab(2);return false;">리뷰 2,431건</a>
+                    </div>
+                    <p class="prod-sub">남성 컨디션 UP · 자신감 회복 프리미엄 포뮬러</p>
+                    <h1 class="prod-title">💎 프리미엄 CS12 100% 천연 유기농 (남성 전용)</h1>
+
+                    <div class="price-line">
+                        <span id="disp_off">7%</span>
+                        <span id="disp_price">260,000원</span>
+                        <span id="disp_original">280,000원</span>
+                    </div>
+
+                    <div class="info-rows">
+                        <div class="row"><div class="k">배송비</div><div class="v">무료배송 (당일 안전 발송)</div></div>
+                        <div class="row"><div class="k">섭취방법</div><div class="v">5일 간격 1캡슐, 필요 시 최대 2캡슐</div></div>
+                    </div>
+
+                    <div class="order-card">
+                        <h4>남성 기능 즉시 강화</h4>
+                        <ul>
+                            <li><b>사정 컨트롤 향상:</b> 원하는 만큼 길고 뜨겁게</li>
+                            <li><b>강력한 발기력:</b> 빈틈없는 단단함과 즉각적인 반응</li>
+                            <li><b>오르가즘 극대화:</b> 숨길 수 없는 희열 및 무한한 사정감</li>
+                            <li><b>부작용 Zero:</b> 안면홍조, 두통, 안구충혈 등 부작용 없음</li>
+                        </ul>
+                    </div>
+
+                    <p class="section-label">📦 구매 옵션 선택 <b>(수량이 많을수록 할인 UP)</b></p>
+                    <div class="price-grid">
+                        <div class="p-btn" data-price="70000" data-original="70000" onclick="setPrice(this, '1통 (10정) / 70,000원')">
+                            <span class="opt-name">1통<small>10정</small></span><span class="opt-price">70,000원</span>
+                        </div>
+                        <div class="p-btn" data-price="140000" data-original="140000" onclick="setPrice(this, '2통 (20정) / 140,000원')">
+                            <span class="opt-name">2통<small>20정</small></span><span class="opt-price">140,000원</span>
+                        </div>
+                        <div class="p-btn active" id="best_option" data-badge="BEST" data-price="260000" data-original="280000" onclick="setPrice(this, '3통 (40정) / 260,000원')">
+                            <span class="opt-name">3통<small>40정</small></span><span class="opt-price">260,000원</span>
+                        </div>
+                        <div class="p-btn" data-price="390000" data-original="420000" onclick="setPrice(this, '4통 (60정) / 390,000원')">
+                            <span class="opt-name">4통<small>60정</small></span><span class="opt-price">390,000원</span>
+                        </div>
+                        <div class="p-btn" data-price="480000" data-original="560000" onclick="setPrice(this, '5통 (80정) / 480,000원')">
+                            <span class="opt-name">5통<small>80정</small></span><span class="opt-price">480,000원</span>
+                        </div>
+                        <div class="p-btn" data-price="550000" data-original="700000" data-badge="MAX" onclick="setPrice(this, '6통 (100정) / 550,000원')">
+                            <span class="opt-name">6통<small>100정</small></span><span class="opt-price">550,000원</span>
+                        </div>
+                    </div>
+
+                    <div class="total-row">
+                        <span class="lbl">TOTAL</span>
+                        <span id="total_price">260,000원</span>
+                    </div>
+
+                    <p class="section-label">🚚 배송 정보</p>
+                    <div class="input-box">
+                        <input type="text" id="name" maxlength="10" placeholder="주문자 성함">
+                        <input type="tel" id="tel" maxlength="13" placeholder="연락처 (숫자만 입력)">
+                        <input type="text" id="addr" maxlength="100" placeholder="배송지 상세 주소">
+                    </div>
+
+                    <a href="tel:01025303457" class="btn-call">📞 010-2530-3457 전화 주문</a>
+
+                    <div class="pay-btns">
+                        <button class="pay-btn kakao" onclick="payWith('카카오')">카카오페이 결제</button>
+                        <button class="pay-btn toss" onclick="payWith('토스')">토스 결제</button>
+                    </div>
+
+                    <div class="bank-info">
+                        계좌안내: <b>우체국 110-0037-25716 (김태근)</b><br>
+                        <span style="font-size:11px; color:#999;">*버튼 클릭 시 계좌번호가 자동 복사됩니다.</span>
+                    </div>
+                </div>
+
+                <!-- 압도적 효능 탭 -->
+                <div id="tab1" class="tab-content">
+                    <h3 class="effect-h3">성기능 극대화 (Sexual Performance)</h3>
+                    <div class="effect-grid">
+                        <div class="effect-box"><b>발기력 강화</b>혈행 개선을 통해 터질듯한 강직도와 지속 시간을 제공합니다.</div>
+                        <div class="effect-box"><b>사정 컨트롤</b>심리적 불안감을 해소하고 사정 타이밍을 완벽하게 제어합니다.</div>
+                        <div class="effect-box"><b>성기 확대 효과</b>장기간 복용 시 혈류량 증가로 인한 확대 효과를 지원합니다.</div>
+                        <div class="effect-box"><b>강력한 오르가즘</b>정자 수 증가와 체내 산화질소 수치를 높여 후련한 사정감을 선사합니다.</div>
+                    </div>
+
+                    <h3 class="effect-h3">12가지 천연 포뮬러</h3>
+                    <div class="formula-card">
+                        마카, 농축자초, 트리블러스, 리수오, 집모란피, 구기자, 인삼 등 엄선된 100% 유기농 재료가 신체의 호르몬 균형을 맞춰줍니다. 타사 대비 250% 강화된 120mg 고함량으로 단 1알로도 충분합니다.
+                    </div>
+
+                    <h3 class="effect-h3">복용 및 안전성</h3>
+                    <ul class="safety-list">
+                        <li>복용 1시간 내 효과 발현, 최대 5일간 지속</li>
+                        <li><b>안면홍조, 두통, 안구충혈 등 부작용 없음</b></li>
+                        <li>5일 간격 1캡슐 복용 (필요 시 최대 2캡슐)</li>
+                    </ul>
+                </div>
+
+                <!-- 실제 후기 탭 -->
+                <div id="tab2" class="tab-content">
+                    <div class="rev-summary">
+                        <div class="rev-summary-score">
+                            <b id="rev_avg">4.9</b>
+                            <span class="rev-summary-stars">★★★★★</span>
+                            <small id="rev_count">총 0개의 후기</small>
+                        </div>
+                    </div>
+
+                    <div class="rev-form" id="rev_form_area">
+                        <p class="rev-form-title">후기 작성하기</p>
+                        <p class="rev-form-guide">별점을 선택하고 상품 후기를 남겨주세요.</p>
+                        <div class="star-rating" id="star_wrap">
+                            <span class="star" data-v="1">★</span><span class="star" data-v="2">★</span><span class="star" data-v="3">★</span><span class="star" data-v="4">★</span><span class="star" data-v="5">★</span>
+                        </div>
+                        <textarea id="rev_text" maxlength="500" placeholder="상품은 어떠셨나요? 솔직한 후기를 남겨주세요."></textarea>
+                        <button class="btn-call" id="rev_submit_btn" style="margin:0;" onclick="submitReview()">후기 등록</button>
+                    </div>
+                    <p class="section-label" style="margin-top:24px;">📝 구매자 후기</p>
+                    <div id="rev_list"></div>
+                </div>
+            </div>
+
+            <!-- 커스텀 토스트 알림창 -->
+            <div id="toast">알림 메시지</div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const BANK_ACC = "110-0037-25716";
+    let selectedPrice = "3통 (40정) / 260,000원";
+    let curRating = 0;
+    let editIndex = -1; // 수정 모드 인덱스
+    
+    // 원본 데이터(보안 처리 전)를 저장
+    let reviews = JSON.parse(localStorage.getItem('cs12_data')) || [];
+
+    // 토스트 알림 함수
+    function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+    }
+
+    // 전화번호 자동 하이픈 포맷팅
+    document.getElementById('tel').addEventListener('input', function (e) {
+        let val = e.target.value.replace(/[^0-9]/g, '');
+        let res = '';
+        if(val.length < 4) res = val;
+        else if(val.length < 8) res = val.substr(0, 3) + '-' + val.substr(3);
+        else res = val.substr(0, 3) + '-' + val.substr(3, 4) + '-' + val.substr(7, 4);
+        e.target.value = res;
+    });
+
+    // 탭 전환
+    function tab(n) {
+        document.querySelectorAll('.tab-content, .nav-item').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab'+n).classList.add('active');
+        document.querySelectorAll('.nav-item')[n].classList.add('active');
+        if(n === 2) renderReviews();
+    }
+
+    // BEST(3통) 바로가기: 주문 탭으로 이동 후 3통 옵션 자동 선택
+    function goBest() {
+        tab(0);
+        const best = document.getElementById('best_option');
+        if (best) {
+            setPrice(best, '3통 (40정) / 260,000원');
+            best.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    // 상품 선택 (선택 시 할인율/가격/TOTAL 자동 갱신)
+    function setPrice(el, val) {
+        document.querySelectorAll('.p-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        selectedPrice = val;
+
+        // 추가: 상단 가격 표기 및 TOTAL 동기화
+        const price = Number(el.dataset.price) || 0;
+        const original = Number(el.dataset.original) || price;
+        const off = original > 0 ? Math.round((1 - price / original) * 100) : 0;
+        document.getElementById('disp_price').innerText = price.toLocaleString() + '원';
+        document.getElementById('total_price').innerText = price.toLocaleString() + '원';
+        const offEl = document.getElementById('disp_off');
+        const oriEl = document.getElementById('disp_original');
+        if (off > 0) {
+            offEl.style.display = 'inline'; offEl.innerText = off + '%';
+            oriEl.style.display = 'inline'; oriEl.innerText = original.toLocaleString() + '원';
+        } else {
+            offEl.style.display = 'none';
+            oriEl.style.display = 'none';
+        }
+    }
+
+    // 결제 및 계좌 복사
+    async function payWith(type) {
+        const name = document.getElementById('name').value.trim();
+        const tel = document.getElementById('tel').value.trim();
+        const addr = document.getElementById('addr').value.trim();
+        if(!name || tel.length < 12) return showToast('성함과 정확한 연락처를 입력해주세요.');
+
+        try {
+            await navigator.clipboard.writeText(BANK_ACC);
+            showToast(`계좌번호(${BANK_ACC}) 복사 완료!\n${type} 앱으로 이동합니다.`);
+            
+            setTimeout(() => {
+                if(type === '카카오') window.location.href = "kakaotalk://bizpay/home";
+                else window.location.href = "supertoss://";
+                
+                const msg = `[CS12 주문]\n입금자: ${name}\n연락처: ${tel}\n주소: ${addr}\n상품: ${selectedPrice}\n결제수단: ${type}`;
+                setTimeout(() => { window.location.href = `sms:01025303457?body=${encodeURIComponent(msg)}`; }, 1000);
+            }, 1500);
+            
+        } catch (err) {
+            showToast("계좌번호: " + BANK_ACC + " (복사 후 이동해주세요)");
+        }
+    }
+
+    // 별점 UI 업데이트
+    function updateStars(rating) {
+        curRating = rating;
+        document.querySelectorAll('.star').forEach(star => {
+            star.classList.toggle('selected', star.dataset.v <= curRating);
+        });
+    }
+
+    document.querySelectorAll('.star').forEach(s => {
+        s.onclick = function() { updateStars(this.dataset.v); }
+    });
+
+    // 보안 처리 함수 (XSS 방지용) - 출력할 때만 사용
+    function sanitize(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    // 리뷰 등록 및 수정 (스마트 에디터)
+    function submitReview() {
+        const txt = document.getElementById('rev_text').value.trim();
+        if(!txt || curRating == 0) return showToast('별점과 내용을 모두 입력해주세요.');
+        
+        if (editIndex > -1) {
+            // 기존 리뷰 수정
+            reviews[editIndex].rate = curRating;
+            reviews[editIndex].rawText = txt; // 원본 텍스트 저장
+            showToast('리뷰가 수정되었습니다.');
+            
+            // 폼 초기화
+            editIndex = -1;
+            document.getElementById('rev_form_area').classList.remove('editing');
+            document.getElementById('rev_submit_btn').innerText = "후기 등록";
+        } else {
+            // 새 리뷰 등록
+            const newRev = {
+                rate: curRating,
+                rawText: txt,
+                date: new Date().toLocaleDateString()
+            };
+            reviews.unshift(newRev);
+            showToast('리뷰가 등록되었습니다.');
+        }
+        
+        localStorage.setItem('cs12_data', JSON.stringify(reviews));
+        document.getElementById('rev_text').value = '';
+        updateStars(0);
+        renderReviews();
+    }
+
+    // 리뷰 수정 모드 진입
+    function editReview(i) {
+        editIndex = i;
+        const target = reviews[i];
+        
+        // 데이터 불러오기
+        document.getElementById('rev_text').value = target.rawText;
+        updateStars(target.rate);
+        
+        // 폼 UI 변경
+        const formArea = document.getElementById('rev_form_area');
+        formArea.classList.add('editing');
+        document.getElementById('rev_submit_btn').innerText = "수정 완료";
+        
+        // 작성칸으로 스크롤 부드럽게 이동
+        formArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        showToast('내용을 수정한 뒤 완료를 눌러주세요.');
+    }
+
+    // 리뷰 삭제
+    function deleteReview(i) {
+        if(confirm('이 리뷰를 삭제하시겠습니까?')) {
+            reviews.splice(i, 1);
+            localStorage.setItem('cs12_data', JSON.stringify(reviews));
+            
+            // 만약 수정 중이던 리뷰를 삭제했다면 폼 초기화
+            if(editIndex === i) {
+                editIndex = -1;
+                document.getElementById('rev_text').value = '';
+                updateStars(0);
+                document.getElementById('rev_form_area').classList.remove('editing');
+                document.getElementById('rev_submit_btn').innerText = "후기 등록";
+            }
+            
+            showToast('삭제되었습니다.');
+            renderReviews();
+        }
+    }
+
+    // 리뷰 화면 렌더링
+    function renderReviews() {
+        // 평균 평점 및 개수 갱신
+        const avgEl = document.getElementById('rev_avg');
+        const cntEl = document.getElementById('rev_count');
+        if (avgEl && cntEl) {
+            if (reviews.length) {
+                const avg = reviews.reduce((s, r) => s + Number(r.rate), 0) / reviews.length;
+                avgEl.innerText = avg.toFixed(1);
+                cntEl.innerText = `총 ${reviews.length}개의 후기`;
+            } else {
+                avgEl.innerText = '5.0';
+                cntEl.innerText = '첫 후기를 남겨주세요';
+            }
+        }
+
+        const list = document.getElementById('rev_list');
+        list.innerHTML = reviews.length ? reviews.map((r, i) => `
+            <div style="border-bottom:1px solid #eee; padding:15px 0;">
+                <div style="color:#fcc419; margin-bottom:5px;">${'★'.repeat(r.rate)}${'☆'.repeat(5-r.rate)}</div>
+                <div style="font-size:14px; line-height:1.6; word-break:keep-all;">${sanitize(r.rawText)}</div>
+                <div class="rev-actions">
+                    <span>구매자 | ${r.date}</span>
+                    <div class="action-btns">
+                        <span onclick="editReview(${i})">수정</span>
+                        <span onclick="deleteReview(${i})">삭제</span>
+                    </div>
+                </div>
+            </div>
+        `).join('') : '<div style="text-align:center; padding:50px 0; color:#ccc;">첫 후기를 기다리고 있습니다.</div>';
+    }
+
+    window.onload = renderReviews;
+</script>
+</body>
+</html>
